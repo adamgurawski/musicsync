@@ -3,15 +3,32 @@
 
 #include <iostream>
 
-// AG: TODO: file name parser.
+// AG: TODO: use command line args parser.
 
-int main()
+/**
+ * First argument should be the directory path, e.g. "E:/vs_projects/musicsync".
+ * Second argument should be the extension, e.g. ".mp3"
+ */
+int main(int argc, char** argv)
 {
+  constexpr int expectedArgs = 3;
+
+  // This will do for now.
+  if (argc != expectedArgs)
+  {
+    std::cerr << "Incorrect number of arguments passed: " << argc - 1 << "." << "\n" <<
+      "Expected: " << expectedArgs - 1 << std::endl;
+    return 1;
+  }
+
   try
   {
-    // AG: TODO: values hardcoded for testing purposes, to be passed as command line arguments.
-    // Maybe some day inserted in GUI.
-    ms::FileManager::ExtractSongInfo("E:/vs_projects/musicsync", ".txt");
+    ms::FileManager::SongInfoCtr songInfo = ms::FileManager::ExtractSongInfo(argv[1], argv[2]);
+    
+    std::cout << "Printing song info container contents.." << std::endl;
+
+    for (const auto& song : songInfo)
+      std::cout << "song: " << song << std::endl;
   }
   catch (const std::exception& e)
   {

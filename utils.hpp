@@ -1,3 +1,4 @@
+#pragma once
 
 #include <iostream>
 
@@ -6,9 +7,9 @@ namespace ms
 namespace utils
 {
 
-inline void PrintNotSupportedYet(const char* what)
+inline void PrintNotImplementedYet(const char* what)
 {
-  std::cerr << what << " is not supported yet." << std::endl;
+  std::cerr << what << " is not implemented yet." << std::endl;
 };
 
 } // namespace utils

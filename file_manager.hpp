@@ -1,3 +1,5 @@
+#pragma once
+
 #include "song_info.hpp"
 
 #include <string>

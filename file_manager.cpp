@@ -1,4 +1,6 @@
 #include "file_manager.hpp"
+
+#include "filename_parser.hpp"
 #include "utils.hpp"
 
 #include <filesystem>
@@ -50,7 +52,7 @@ std::vector<std::string> GetFileNames(const std::string& path, const std::string
     {
       // AG: TODO: temporarily print the path for debugging purposes.
       std::cout << "Path: " << filePath << std::endl;
-      ctr.push_back(GetFileNameWithoutExtension(filePath));
+      ctr.emplace_back(GetFileNameWithoutExtension(filePath));
     });
 
   return ctr;
@@ -64,19 +66,14 @@ namespace ms
 FileManager::SongInfoCtr FileManager::ExtractSongInfo(const std::string& path, 
   const std::string& extension)
 {
-  utils::PrintNotSupportedYet("FileManager::ExtractSongInfo");
-
-  // Fill song info ctr with extracted file names.
-  auto result = GetFileNames(path, extension);
-
-  for (const auto& elem : result)
-    std::cout << "filename: " << elem << std::endl;
+  auto filenames = GetFileNames(path, extension);
 
   SongInfoCtr ctr;
 
+  for (const auto& elem : filenames)
+    ctr.emplace_back(FilenameParser::Parse(elem));
 
-
-  return SongInfoCtr();
-};
+  return ctr;
+}
 
 } // namespace ms
