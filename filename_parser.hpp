@@ -1,6 +1,6 @@
 #pragma once
 
-#include "song_info.hpp"
+#include "song.hpp"
 
 namespace ms
 {
@@ -8,7 +8,7 @@ namespace ms
 struct FilenameParser
 {
   // AG: TODO: comment me.
-  static SongInfo Parse(const std::string& filename);
+  static Song Parse(const std::string& filename);
 };
 
 } // namespace ms

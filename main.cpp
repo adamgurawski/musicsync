@@ -23,11 +23,11 @@ int main(int argc, char** argv)
 
   try
   {
-    ms::FileManager::SongInfoCtr songInfo = ms::FileManager::ExtractSongInfo(argv[1], argv[2]);
+    ms::FileManager::Songs songs = ms::FileManager::ExtractSongInfo(argv[1], argv[2]);
     
     std::cout << "Printing song info container contents.." << std::endl;
 
-    for (const auto& song : songInfo)
+    for (const auto& song : songs)
       std::cout << "song: " << song << std::endl;
   }
   catch (const std::exception& e)

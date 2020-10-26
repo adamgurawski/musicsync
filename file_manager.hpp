@@ -1,6 +1,6 @@
 #pragma once
 
-#include "song_info.hpp"
+#include "song.hpp"
 
 #include <string>
 #include <vector>
@@ -17,12 +17,12 @@ namespace ms
 class FileManager
 {
 public:
-  using SongInfoCtr = std::vector<SongInfo>;
+  using Songs = std::vector<Song>;
   
   /**
    * Return song info for all songs in specified directory.
    */
-  static SongInfoCtr ExtractSongInfo(const std::string& path, const std::string& extension);
+  static Songs ExtractSongInfo(const std::string& path, const std::string& extension);
 };
 
 } // namespace ms
