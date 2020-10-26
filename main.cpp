@@ -1,13 +1,13 @@
 
-#include "file_manager.hpp"
+#include "song_extractor.hpp"
 
 #include <iostream>
 
 // AG: TODO: use command line args parser.
 
 /**
- * First argument should be the directory path, e.g. "E:/vs_projects/musicsync".
- * Second argument should be the extension, e.g. ".mp3"
+ * First argument should be the directory path, e.g. "D:/my_music".
+ * Second argument should be the files extension, e.g. ".mp3"
  */
 int main(int argc, char** argv)
 {
@@ -23,11 +23,11 @@ int main(int argc, char** argv)
 
   try
   {
-    ms::FileManager::Songs songs = ms::FileManager::ExtractSongInfo(argv[1], argv[2]);
+    ms::Songs localSongs = ms::SongExtractor::ExtractSongs(argv[1], argv[2]);
     
     std::cout << "Printing song info container contents.." << std::endl;
 
-    for (const auto& song : songs)
+    for (const auto& song : localSongs)
       std::cout << "song: " << song << std::endl;
   }
   catch (const std::exception& e)
