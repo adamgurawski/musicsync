@@ -13,7 +13,7 @@ void View::PrintError(const char* message)
 
 void View::PrintSongs(const std::vector<Song>& songs)
 {
-  Println("Songs:");
+  Println("##### Songs #####");
 
   for (const auto& song : songs)
   {

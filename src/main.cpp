@@ -1,9 +1,9 @@
 #include "local_files_utils.hpp"
 #include "view.hpp"
 
-// TODO: AG: use command line args parser.
-// TODO: AG: store song info in a database
-// TODO: AG: extract song info from spotify (use Spotify's web API)
+// TODO: AG: use command line args ExtractSongInfor.
+// TODO: AG: store song details in a database
+// TODO: AG: get song list from spotify (use Spotify's web API)
 
 /**
  * First argument should be the directory path, e.g. "D:/my_music".
@@ -32,7 +32,7 @@ int main(int argc, char** argv)
   }
   catch (const std::exception& e)
   {
-    std::string message = "Exception caught: ";
+    std::string message = "Exception caught in main function: ";
     message += e.what();
     ms::View::PrintError(message);
     return -1;

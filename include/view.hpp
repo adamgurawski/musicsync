@@ -21,7 +21,7 @@ class View
 public:
   /// Redirect stream to std::cerr.
   static void PrintError(std::stringstream& ss)
-    { std::cerr << ss.rdbuf() << std::flush; }
+    { std::cerr << ss.rdbuf() << std::endl; }
 
   /**
    * Print message to std::cerr. End with newline.
