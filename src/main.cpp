@@ -1,6 +1,5 @@
 #include "local_files_utils.hpp"
-
-#include <iostream>
+#include "view.hpp"
 
 // TODO: AG: use command line args parser.
 // TODO: AG: store song info in a database
@@ -17,8 +16,10 @@ int main(int argc, char** argv)
   // This will do for now.
   if (argc != expectedArgs)
   {
-    std::cerr << "Incorrect number of arguments passed: " << argc - 1 << "." << "\n" <<
-      "Expected: " << expectedArgs - 1 << std::endl;
+    std::stringstream errorMessage;
+    errorMessage << "Incorrect number of arguments passed: " << argc - 1 << "." << "\n" <<
+      "Expected: " << expectedArgs - 1 << ".";
+    ms::View::PrintError(errorMessage);
     return 1;
   }
 
@@ -26,16 +27,14 @@ int main(int argc, char** argv)
   {
     // Get songs stored on the device from path specified by argv[1].
     ms::Songs localSongs = ms::local_utils::ExtractSongs(argv[1], argv[2]);
-    
-    std::cout << "Printing song info container contents.." << std::endl;
 
-    for (const auto& song : localSongs)
-      std::cout << "song: " << song << std::endl;
-
+    ms::View::PrintSongs(localSongs);
   }
   catch (const std::exception& e)
   {
-    std::cerr << "Exception caught: " << e.what() << std::endl;
+    std::string message = "Exception caught: ";
+    message += e.what();
+    ms::View::PrintError(message);
     return -1;
   }
   
