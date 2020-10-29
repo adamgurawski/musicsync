@@ -6,6 +6,7 @@
 
 #include "song.hpp"
 
+#include <filesystem>
 #include <vector>
 
 namespace ms
@@ -14,6 +15,8 @@ using Songs = std::vector<Song>;
 
 namespace local_utils
 {
+using Path = std::filesystem::path;
+using Paths = std::vector<Path>;
 
 /**
  * \return vector of found Songs
@@ -23,12 +26,12 @@ namespace local_utils
 Songs ExtractSongs(const std::string& path, const std::string& fileExtension);
 
 /**
- * \return vector storing names of found files (extensions are erased)
+ * TODO: AG: update comment.
+ * \return vector storing paths of found files
  * \param path path to directory where we will be looking for files (and its subdirectories)
  * \param extension file extension, e.g. ".mp3"
  */
-std::vector<std::string> ExtractFilenames(const std::string& path,
-  const std::string& extension);
+Paths ExtractFilePaths(const std::string& path, const std::string& extension);
 
 } // namespace local_files
 } // namespace ms

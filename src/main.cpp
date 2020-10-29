@@ -3,6 +3,8 @@
 #include <iostream>
 
 // TODO: AG: use command line args parser.
+// TODO: AG: store song info in a database
+// TODO: AG: extract song info from spotify (use Spotify's web API)
 
 /**
  * First argument should be the directory path, e.g. "D:/my_music".
@@ -22,7 +24,7 @@ int main(int argc, char** argv)
 
   try
   {
-    // Get songs stored on the device from path specified my argv[1].
+    // Get songs stored on the device from path specified by argv[1].
     ms::Songs localSongs = ms::local_utils::ExtractSongs(argv[1], argv[2]);
     
     std::cout << "Printing song info container contents.." << std::endl;
