@@ -1,7 +1,12 @@
 #include "local_files_utils.hpp"
 #include "view.hpp"
 
-// TODO: AG: use command line args ExtractSongInfor.
+// TODO: AG: extern possibly not required, but I'll leave it here for now.
+extern "C" {
+#include "sqlite3.h"
+}
+
+// TODO: AG: use command line args parser.
 // TODO: AG: store song details in a database
 // TODO: AG: get song list from spotify (use Spotify's web API)
 
@@ -11,6 +16,7 @@
  */
 int main(int argc, char** argv)
 {
+  sqlite3 db;
   constexpr int expectedArgs = 3;
 
   // This will do for now.
