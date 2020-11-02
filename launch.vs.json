@@ -1,0 +1,13 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "args": [ "E:/vs_projects/musicsync/test_dir .mp3"],
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "musicsync.exe",
+      "name": "musicsync.exe"
+    }
+  ]
+}
