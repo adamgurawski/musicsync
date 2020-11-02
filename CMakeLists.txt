@@ -2,25 +2,25 @@ cmake_minimum_required(VERSION 3.17)
 project(musicsync)
 set(CMAKE_CXX_STANDARD 17)
 
-message("-- Binary dir: ${CMAKE_BINARY_DIR}")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+add_executable(musicsync ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
-file(GLOB SOURCES "src/*.cpp")
+# Specify sources for the project.
+target_sources(musicsync PUBLIC 
+  ${CMAKE_SOURCE_DIR}/src/main.cpp
+  ${CMAKE_SOURCE_DIR}/src/view.cpp
+  ${CMAKE_SOURCE_DIR}/src/local_files_utils.cpp)
 
-set(SQLITE_DIR ${CMAKE_SOURCE_DIR}/storage)
-message ("-- SQLite dir: ${SQLITE_DIR}")
+# Specify include directories for the project.
+target_include_directories(musicsync PUBLIC 
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/sqlite)
 
-find_library(SQLITE_LIB sqlite3.lib HINTS ${SQLITE_DIR})
-message ("-- SQLite_LIB: ${SQLITE_LIB}")
+# Import SQLite library.
+add_library(sqlite SHARED IMPORTED)
+set_target_properties(sqlite PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll")
+set_target_properties(sqlite PROPERTIES IMPORTED_IMPLIB "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.lib")
 
-add_executable(musicsync ${SOURCES})
+# Copy dll so it's in the same directory as the executable.
+file(COPY "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll" DESTINATION ${CMAKE_BINARY_DIR})
 
-target_include_directories(musicsync PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-                                            ${SQLITE_DIR})
-
-target_link_libraries(musicsync PUBLIC ${SQLITE_LIB})
-
-install(TARGETS musicsync DESTINATION bin)
-install(FILES ${SQLITE_DIR}/sqlite3.dll DESTINATION bin)
-
-
+target_link_libraries(musicsync sqlite)
