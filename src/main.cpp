@@ -1,10 +1,7 @@
 #include "local_files_utils.hpp"
 #include "view.hpp"
 
-// TODO: AG: extern possibly not required, but I'll leave it here for now.
-extern "C" {
 #include "sqlite3.h"
-}
 
 // TODO: AG: use command line args parser.
 // TODO: AG: store song details in a database
@@ -16,7 +13,11 @@ extern "C" {
  */
 int main(int argc, char** argv)
 {
-  sqlite3 db;
+  // Testing whether linking with sqlite3 was successful.
+  sqlite3* db;
+  int rc = sqlite3_open("test", &db);
+  sqlite3_close(db);
+
   constexpr int expectedArgs = 3;
 
   // This will do for now.
