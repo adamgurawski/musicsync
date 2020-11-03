@@ -3,12 +3,20 @@
 namespace ms
 {
 
+void View::PrintInfo(const char* message)
+{
+  if (message == nullptr)
+    throw std::invalid_argument("Invalid usage of PrintInfo function: empty message passed.");
+
+  std::cout << "[INFO] " << message << std::endl;
+}
+
 void View::PrintError(const char* message)
 {
   if (message == nullptr)
     throw std::invalid_argument("Invalid usage of PrintError function: empty message passed.");
 
-  std::cerr << message << std::endl;
+  std::cerr << "[ERROR] " << message << std::endl;
 }
 
 void View::PrintSongs(const std::vector<Song>& songs)
