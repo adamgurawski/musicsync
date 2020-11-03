@@ -7,6 +7,7 @@
 // TODO: AG: use command line args parser.
 // TODO: AG: store song details in a database
 // TODO: AG: get song list from spotify (use Spotify's web API)
+// TODO: AG: improve path printing - sometimes slashes are printed doubled (//).
 
 /**
  * First argument should be the path to the database file.
@@ -21,10 +22,10 @@ int main(int argc, char** argv)
   if (argc != expectedArgs)
   {
     std::stringstream errorMessage;
-    errorMessage << "Incorrect number of arguments passed: " << argc - 1 << "." << "\n" <<
-      "Expected: " << expectedArgs - 1 << ".";
+    errorMessage << "Incorrect number of arguments passed: " << argc - 1 << "."
+      << " Expected: " << expectedArgs - 1 << ".";
     ms::View::PrintError(errorMessage);
-    return 1;
+    return -1;
   }
 
   std::shared_ptr<ms::IDatabase> database;
@@ -34,28 +35,28 @@ int main(int argc, char** argv)
   {
     database = std::make_shared<ms::SqliteDb>(std::string(argv[1]));
     database->Connect();
+    database->Init();
   }
   catch (const std::exception& e)
   {
-    std::string message = "Exception thrown while connecting to the database: ";
-    message += e.what();
-    ms::View::PrintError(message);
+    ms::View::PrintError("Exception thrown while connecting to the database: " 
+      + std::string(e.what()));
+    return 1;
   }
 
+  /*
   try
   {
     // Get songs stored on the device from path specified by param.
     ms::Songs localSongs = ms::local_utils::ExtractSongs(argv[2], argv[3]);
-
     ms::View::PrintSongs(localSongs);
   }
   catch (const std::exception& e)
   {
-    std::string message = "Exception caught in main function: ";
-    message += e.what();
-    ms::View::PrintError(message);
-    return -1;
+    ms::View::PrintError("Exception thrown while extracting songs: " + std::string(e.what()));
+    return 2;
   }
+  */
   
   return 0;
 }
