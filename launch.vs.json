@@ -3,7 +3,7 @@
   "defaults": {},
   "configurations": [
     {
-      "args": [ "E:/vs_projects/musicsync/test_dir .mp3"],
+      "args": [ "E:/vs_projects/musicsync/db/test.db E:/vs_projects/musicsync/test_dir .mp3"],
       "type": "default",
       "project": "CMakeLists.txt",
       "projectTarget": "musicsync.exe",

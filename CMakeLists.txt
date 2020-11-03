@@ -8,7 +8,8 @@ add_executable(musicsync ${CMAKE_SOURCE_DIR}/src/main.cpp)
 target_sources(musicsync PUBLIC 
   ${CMAKE_SOURCE_DIR}/src/main.cpp
   ${CMAKE_SOURCE_DIR}/src/view.cpp
-  ${CMAKE_SOURCE_DIR}/src/local_files_utils.cpp)
+  ${CMAKE_SOURCE_DIR}/src/local_files_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/database.cpp)
 
 # Specify include directories for the project.
 target_include_directories(musicsync PUBLIC 
