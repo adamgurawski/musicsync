@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  /*
+  
   try
   {
     // Get songs stored on the device from path specified by param.
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     ms::View::PrintError("Exception thrown while extracting songs: " + std::string(e.what()));
     return 2;
   }
-  */
+  
   
   return 0;
 }

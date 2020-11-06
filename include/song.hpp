@@ -8,7 +8,7 @@ namespace ms
 {
 
 /**
- * // TODO: AG: consider changing it into class.
+ * TODO: AG: consider changing it into class.
  * Structure representing relevant info of a song. 
  */
 struct Song
@@ -19,11 +19,8 @@ struct Song
   std::filesystem::path AbsolutePath;
 };
 
-// TODO: AG: make the comparison case insensitive.
-inline bool operator==(const Song& lhs, const Song& rhs)
-{
-  return lhs.Author == rhs.Author && lhs.Title == rhs.Title;
-}
+/// \return true if authors and titles are equal (case insensitive)
+bool operator==(const Song& lhs, const Song& rhs);
 
 inline std::ostream& operator<<(std::ostream& stream, const Song& song)
 {
