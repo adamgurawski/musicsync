@@ -16,9 +16,14 @@
 namespace ms
 {
 
+class SongsTableView;
+
 class View
 {
 public:
+  /// Print neatly formatted songs table contents.
+  static void PrintSongsTable(const SongsTableView& songsTable);
+
   /**
    * Append [INFO] before the message and print it to std::cout. End with newline.
    * \exception std::invalid_argument empty message
