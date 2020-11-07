@@ -68,11 +68,6 @@ void PerformOnEveryNonDirectoryFile(fs::recursive_directory_iterator directoryIt
 namespace ms::local_utils
 {
 
-/**
- * TODO: AG: comment me.
- * Scan all files with given extension in specified path (and subdirectories if any exists).
- * \return
- */
 Songs ExtractSongs(const std::string& path, const std::string& fileExtension)
 {
   Paths songPaths = ExtractFilePaths(path, fileExtension);
@@ -92,7 +87,7 @@ Songs ExtractSongs(const std::string& path, const std::string& fileExtension)
         "': " << e.what() << ".";
       View::PrintError(message);
     }
-  }
+  } // for every path in song paths
 
   return result;
 }

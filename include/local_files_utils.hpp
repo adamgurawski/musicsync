@@ -19,17 +19,19 @@ using Path = std::filesystem::path;
 using Paths = std::vector<Path>;
 
 /**
- * \return vector of found Songs
- * \param path path to directory which will be searched for files (and its subdirectories)
- * \param fileExtension extension of files to be searched for
+ * Get all music files with specified extension that are present in the directory specified by 
+ * path (and in all subdirectories).
+ * \return vector of Songs found in specified path
+ * \param path path to directory which will be searched for files (and all subdirectories)
+ * \param fileExtension extension of files to be searched for, e.g. ".mp3"
  */
 Songs ExtractSongs(const std::string& path, const std::string& fileExtension);
 
 /**
- * TODO: AG: update comment.
- * \return vector storing paths of found files
- * \param path path to directory where we will be looking for files (and its subdirectories)
- * \param extension file extension, e.g. ".mp3"
+ * Get full path of every file present in specified path (and subdirectories).
+ * \return vector storing full paths of found files
+ * \param path path to directory where we will be looking for files (and all subdirectories)
+ * \param extension target file extension, e.g. ".mp3"
  */
 Paths ExtractFilePaths(const std::string& path, const std::string& extension);
 

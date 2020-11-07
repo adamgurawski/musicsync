@@ -10,18 +10,23 @@ namespace
 
 /**
  * Throw std::runtime_error with message consisting of concatenated description 
- * and sqliteErrorMessage. 
+ * and sqliteErrorMessage. Meant to be used after sqlite3_exec returns something other than
+ * SQLITE_OK. The message is copied before sqlite3_free is called on message pointer.
  * \param description e.g. "Unable to connect to database", it's advised NOT to end description
  *  with colon, space, commas etc. as ": " will be appended after the description.
- * \param sqliteErrorMessage error message returned from sqlite3_exec, MUST BE FREED before the throw, 
- * \throw std::runtime_error contets: concatenated description and sqliteErrorMessage
+ * \param sqliteErrorMessage error message returned from sqlite3_exec, will be freed before the throw
+ * \throw std::runtime_error will be thrown as a result with what() consisting of concatenated 
+ *  description and sqliteErrorMessage
  * \throw std::invalid_argument description not specified (nullptr)
  */
 void ThrowRuntimeError(const char* description, char* sqliteErrorMessage)
 {
   if (!description)
+  {
+    sqlite3_free(sqliteErrorMessage);
     throw std::invalid_argument("Incorrect use of ThrowRuntimeError function: "
       "empty description parameter.");
+  }
 
   std::string message = description;
   message += ": ";
