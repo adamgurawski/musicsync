@@ -1,5 +1,7 @@
 #pragma once
 
+#include "songs_table_view.hpp"
+
 #include <string>
 
 struct sqlite3;
@@ -29,6 +31,9 @@ public:
   virtual void AddSong(const std::string& author, const std::string& title, 
     bool presentInSpotify) = 0;
 
+  /// Return 'songs' table contents in SongsTableView.
+  virtual SongsTableView GetSongsTableContents() = 0;
+
 protected:
   IDatabase() = default;
 };
@@ -53,6 +58,8 @@ public:
 
   virtual void AddSong(const std::string& author, const std::string& title,
     bool presentInSpotify) override;
+
+  virtual SongsTableView GetSongsTableContents() override;
 
 private:
   /**

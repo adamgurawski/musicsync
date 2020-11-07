@@ -107,7 +107,7 @@ void SqliteDb::CreateSongsTable()
 
   const char* query =
     "CREATE TABLE IF NOT EXISTS songs ("
-    "id INT PRIMARY KEY,"
+    "id INTEGER PRIMARY KEY,"
     "author TEXT,"
     "title TEXT,"
     "is_present_in_spotify INTEGER DEFAULT 0,"
@@ -126,6 +126,8 @@ void SqliteDb::CreateSongsTable()
 
 bool SqliteDb::SongsTableExists()
 {
+  AssertIsConnected();
+
   // Count tables having name 'songs'.
   const char* query =
     "SELECT COUNT(name) AS song_table_count "
@@ -144,11 +146,17 @@ bool SqliteDb::SongsTableExists()
       if (rowElementsCount != 1 || !rowElements[0])
         return 1; 
 
-      int selectResult = std::stoi(rowElements[0]);
-      int* tableExists = static_cast<int*>(exists);
-      
-      *tableExists = selectResult == 0 ? 0 : 1;
-      return 0;
+      try
+      {
+        int selectResult = std::stoi(rowElements[0]);
+        int* tableExists = static_cast<int*>(exists);
+        *tableExists = selectResult == 0 ? 0 : 1;
+        return 0;
+      }
+      catch (const std::exception& e)
+      {
+        return 2;
+      }
     },
     &tableExists, &errorMsg);
 
@@ -156,6 +164,46 @@ bool SqliteDb::SongsTableExists()
     ThrowRuntimeError("Unable to determine whether 'songs' table exists in the database", errorMsg);
 
   return tableExists != 0;
+}
+
+SongsTableView SqliteDb::GetSongsTableContents()
+{
+  AssertIsConnected();
+
+  const char* query = "SELECT * FROM songs;";
+  char* errorMsg;
+
+  SongsTableView songsTable;
+
+  // The callback function (lambda) is called for every row selected,
+  // this is why
+  int result = sqlite3_exec(Connection, query,
+    [](void* songsTableArg, int rowElementsCount, char** rowElements, char** columnNames) -> int
+    {
+      SongsTableView* songsTable = static_cast<SongsTableView*>(songsTableArg);
+      
+      try
+      {
+        songsTable->AddRow(std::stoi(rowElements[0]), rowElements[1], rowElements[2],
+          std::stoi(rowElements[3]), std::stoi(rowElements[4]));
+
+        return 0;
+      }
+      catch (const std::exception& e)
+      {
+        // TODO: AG: make sure it's invalid to throw from this callback.
+        // Can't throw from C callback, return code different than sqlite codes.
+        return -1;
+      }
+    },
+    &songsTable, &errorMsg);
+
+  if (result == -1)
+    ThrowRuntimeError("Unexpected exception thrown during insertion into SongsTableView.", nullptr);
+  else if (result != SQLITE_OK)
+    ThrowRuntimeError("Unable to retrieve 'songs' table contents", errorMsg);
+
+  return songsTable;
 }
 
 } // namespace ms

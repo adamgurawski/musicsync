@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
   std::shared_ptr<ms::IDatabase> database;
 
-  // Try to connect to the database for testing purposes.
+  // Establish connection to the database.
   try
   {
     database = std::make_shared<ms::SqliteDb>(std::string(argv[1]));
@@ -44,12 +44,16 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  
+  // Temporary testing ground.
   try
   {
     // Get songs stored on the device from path specified by param.
-    ms::Songs localSongs = ms::local_utils::ExtractSongs(argv[2], argv[3]);
-    ms::View::PrintSongs(localSongs);
+    // ms::Songs localSongs = ms::local_utils::ExtractSongs(argv[2], argv[3]);
+    // ms::View::PrintSongs(localSongs);
+
+    // Print songs table contents.
+    auto songsTable = database->GetSongsTableContents();
+    ms::View::PrintSongsTable(songsTable);
   }
   catch (const std::exception& e)
   {
