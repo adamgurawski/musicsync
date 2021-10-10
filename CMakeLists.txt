@@ -25,4 +25,10 @@ set_target_properties(sqlite PROPERTIES IMPORTED_IMPLIB "${CMAKE_SOURCE_DIR}/sql
 # Copy dll so it's in the same directory as the executable.
 file(COPY "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll" DESTINATION ${CMAKE_BINARY_DIR})
 
-target_link_libraries(musicsync sqlite)
+# Import cpr library.
+include(FetchContent)
+FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+  GIT_TAG f4622efcb59d84071ae11404ae61bd821c1c344b) # the commit hash for 1.6.2
+FetchContent_MakeAvailable(cpr)
+
+target_link_libraries(musicsync PRIVATE sqlite cpr::cpr)
