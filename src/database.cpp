@@ -19,6 +19,7 @@ namespace
  *  description and sqliteErrorMessage
  * \throw std::invalid_argument description not specified (nullptr)
  */
+[[noreturn]]
 void ThrowRuntimeError(const char* description, char* sqliteErrorMessage)
 {
   if (!description)

@@ -1,5 +1,7 @@
+// TODO: AG: change the includes to f.e. <musicsync/database.hpp>.
 #include "database.hpp"
 #include "local_files_utils.hpp"
+#include "spotify_connector.hpp"
 #include "view.hpp"
 
 #include <memory>
@@ -60,7 +62,6 @@ int main(int argc, char** argv)
     ms::View::PrintError("Exception thrown while extracting songs: " + std::string(e.what()));
     return 2;
   }
-  
   
   return 0;
 }

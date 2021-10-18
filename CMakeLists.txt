@@ -9,6 +9,7 @@ target_sources(musicsync PUBLIC
   ${CMAKE_SOURCE_DIR}/src/main.cpp
   ${CMAKE_SOURCE_DIR}/src/database.cpp
   ${CMAKE_SOURCE_DIR}/src/local_files_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/spotify_connector.cpp
   ${CMAKE_SOURCE_DIR}/src/songs_table_view.cpp
   ${CMAKE_SOURCE_DIR}/src/view.cpp)
 
