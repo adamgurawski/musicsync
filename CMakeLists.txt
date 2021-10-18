@@ -17,13 +17,20 @@ target_include_directories(musicsync PUBLIC
   ${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}/sqlite)
 
+#set_target_properties(musicsync PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# TODO: AG: It moves musicsync binaries to bin but also moves some gmockd.dll, gtestd.dll etc.
+# which are not needed there - I assume these come from some library unit tests.
+set_target_properties(musicsync PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Use a pre-built sqlite. Copy the dll so it's in the same directory as the executable.
+file(COPY "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll" DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 # Import SQLite library.
 add_library(sqlite SHARED IMPORTED)
 set_target_properties(sqlite PROPERTIES IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll")
 set_target_properties(sqlite PROPERTIES IMPORTED_IMPLIB "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.lib")
-
-# Copy dll so it's in the same directory as the executable.
-file(COPY "${CMAKE_SOURCE_DIR}/sqlite/sqlite3.dll" DESTINATION ${CMAKE_BINARY_DIR})
 
 # Import cpr library.
 include(FetchContent)
